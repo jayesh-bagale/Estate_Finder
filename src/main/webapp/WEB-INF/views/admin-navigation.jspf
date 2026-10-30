@@ -1,0 +1,24 @@
+<nav class="admin-topbar">
+    <div class="admin-topbar-inner">
+        <a class="admin-brand" href="<c:url value='/admindashboard'/>">
+            <span class="admin-brand-mark"><i class="fa-solid fa-house"></i></span>
+            <span>EstateFinders <small>Admin</small></span>
+        </a>
+        <div class="admin-nav-links">
+            <a href="<c:url value='/admindashboard'/>"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="<c:url value='/admin/properties'/>"><i class="fa-solid fa-building"></i> Properties</a>
+            <a href="<c:url value='/property/sellproperty'/>"><i class="fa-solid fa-list-check"></i> Pending</a>
+            <a href="<c:url value='/estate/list'/>"><i class="fa-solid fa-city"></i> Estate cards</a>
+            <a href="<c:url value='/admin/bookings'/>"><i class="fa-solid fa-calendar-check"></i> Bookings</a>
+            <a href="<c:url value='/admin/users'/>"><i class="fa-solid fa-users"></i> Users</a>
+            <a href="<c:url value='/admin/contact'/>"><i class="fa-solid fa-envelope"></i> Messages</a>
+            <a href="<c:url value='/estate/manage'/>"><i class="fa-solid fa-trash-can"></i> Manage estate cards</a>
+        </div>
+        <div class="admin-nav-actions">
+            <a class="admin-public-link" href="<c:url value='/estate/add'/>">Add listing</a>
+            <a class="admin-public-link" href="<c:url value='/adregister'/>">Create admin</a>
+            <a class="admin-public-link" href="<c:url value='/project'/>">View site</a>
+            <a class="admin-logout" href="<c:url value='/admin/project'/>">Log out</a>
+        </div>
+    </div>
+</nav>

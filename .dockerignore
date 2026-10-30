@@ -1,0 +1,13 @@
+.git
+.idea
+.vscode
+.env
+.env.*
+!.env.example
+src/main/resources/application.properties
+src/main/resources/static/uploads/*.html
+src/main/resources/static/uploads/Screenshot*
+target
+build
+estatefinder-uploads
+*.log

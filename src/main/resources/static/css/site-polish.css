@@ -1,0 +1,127 @@
+:root {
+    --site-navy: #0a2342;
+    --site-orange: #ff6a3d;
+    --site-muted: #64748b;
+    --site-line: #e6edf5;
+}
+
+body {
+    background-color: #f5f7fb;
+    color: var(--site-navy);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body .navbar {
+    background: rgba(10, 35, 66, .98) !important;
+    box-shadow: 0 8px 24px rgba(10, 35, 66, .1);
+}
+
+body .navbar-brand {
+    color: #fff;
+    font-weight: 800;
+}
+
+body .nav-link {
+    color: rgba(255, 255, 255, .82) !important;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-weight: 650;
+}
+
+body .nav-link:hover,
+body .nav-link:focus {
+    color: #fff !important;
+}
+
+body .btn-primary,
+body input[type="submit"] {
+    border-color: transparent;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--site-orange), #ff8f59);
+    color: #fff;
+    font-weight: 750;
+}
+
+body .btn-primary:hover,
+body input[type="submit"]:hover {
+    border-color: transparent;
+    background: linear-gradient(135deg, #f45b31, #fb7a49);
+    color: #fff;
+}
+
+body .btn-outline-primary {
+    border-color: var(--site-navy);
+    border-radius: 11px;
+    color: var(--site-navy);
+}
+
+body .btn-outline-primary:hover {
+    border-color: var(--site-navy);
+    background: var(--site-navy);
+    color: #fff;
+}
+
+body :is(input, select, textarea).form-control,
+body :is(input, select, textarea).form-select,
+body input:not([type="submit"]):not([type="hidden"]),
+body select,
+body textarea {
+    border-color: var(--site-line);
+    border-radius: 10px;
+}
+
+body :is(input, select, textarea):focus {
+    border-color: rgba(255, 106, 61, .65);
+    box-shadow: 0 0 0 .2rem rgba(255, 106, 61, .14);
+}
+
+body .card,
+body .form-container,
+body .estate-container,
+body .detail-panel,
+body .container > form {
+    border-color: var(--site-line);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(10, 35, 66, .07);
+}
+
+body h1,
+body h2,
+body h3,
+body h4,
+body h5 {
+    color: var(--site-navy);
+    font-weight: 800;
+}
+
+body .navbar :is(h1, h2, h3, h4, h5),
+body .navbar-brand {
+    color: #fff;
+}
+
+body .text-primary {
+    color: var(--site-navy) !important;
+}
+
+body .bg-primary {
+    background-color: var(--site-navy) !important;
+}
+
+body .alert {
+    border-radius: 12px;
+}
+
+body table {
+    border-color: var(--site-line);
+}
+
+@media (max-width: 640px) {
+    body .navbar-brand {
+        margin-left: 0;
+    }
+
+    body .container > form,
+    body .form-container {
+        margin-top: 28px;
+        padding: 20px;
+    }
+}
