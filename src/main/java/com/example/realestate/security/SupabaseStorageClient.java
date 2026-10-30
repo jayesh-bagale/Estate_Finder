@@ -2,6 +2,7 @@ package com.example.realestate.security;
 
 import java.nio.charset.StandardCharsets;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpEntity;
@@ -21,6 +22,7 @@ public class SupabaseStorageClient {
     private final String serviceRoleKey;
     private final String bucket;
 
+    @Autowired
     public SupabaseStorageClient(
             @Value("${app.upload.supabase.url}") String projectUrl,
             @Value("${app.upload.supabase.service-role-key}") String serviceRoleKey,
