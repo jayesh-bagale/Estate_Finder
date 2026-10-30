@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,9 +19,28 @@ import org.springframework.web.server.ResponseStatusException;
 public class UploadStorageService {
 
     private final Path uploadDirectory;
+    private final String provider;
+    private final SupabaseStorageClient supabaseStorageClient;
 
-    public UploadStorageService(@Value("${app.upload.dir:${user.home}/estatefinder-uploads}") String uploadDirectory) {
+    @Autowired
+    public UploadStorageService(
+            @Value("${app.upload.dir:${user.home}/estatefinder-uploads}") String uploadDirectory,
+            @Value("${app.upload.provider:local}") String provider,
+            ObjectProvider<SupabaseStorageClient> supabaseStorageClientProvider) {
+        this(uploadDirectory, provider, supabaseStorageClientProvider.getIfAvailable());
+    }
+
+    UploadStorageService(String uploadDirectory) {
+        this(uploadDirectory, "local", (SupabaseStorageClient) null);
+    }
+
+    private UploadStorageService(String uploadDirectory, String provider, SupabaseStorageClient supabaseStorageClient) {
         this.uploadDirectory = Paths.get(uploadDirectory).toAbsolutePath().normalize();
+        this.provider = provider;
+        this.supabaseStorageClient = supabaseStorageClient;
+        if (!"local".equals(provider) && !"supabase".equals(provider)) {
+            throw new IllegalArgumentException("Unsupported app.upload.provider: " + provider);
+        }
     }
 
     public Path getUploadDirectory() {
@@ -37,8 +58,15 @@ public class UploadStorageService {
         }
 
         String extension = detectImageExtension(file);
-        Files.createDirectories(uploadDirectory);
         String filename = UUID.randomUUID().toString() + extension;
+        if ("supabase".equals(provider)) {
+            if (supabaseStorageClient == null) {
+                throw new IllegalStateException("Supabase image storage is configured but unavailable.");
+            }
+            return supabaseStorageClient.storeImage(filename, contentTypeFor(extension), file.getBytes());
+        }
+
+        Files.createDirectories(uploadDirectory);
         Path destination = uploadDirectory.resolve(filename).normalize();
         if (!destination.startsWith(uploadDirectory)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid image filename.");
@@ -47,6 +75,21 @@ public class UploadStorageService {
             Files.copy(input, destination);
         }
         return "/uploads/" + filename;
+    }
+
+    private String contentTypeFor(String extension) {
+        switch (extension) {
+            case ".jpg":
+                return "image/jpeg";
+            case ".png":
+                return "image/png";
+            case ".gif":
+                return "image/gif";
+            case ".webp":
+                return "image/webp";
+            default:
+                throw new IllegalArgumentException("Unsupported image extension: " + extension);
+        }
     }
 
     private String detectImageExtension(MultipartFile file) throws IOException {
